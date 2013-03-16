@@ -19,6 +19,8 @@ class ShareFiles(Command):
                 help='The bucket to publish to.')
         parser.add_argument('--password', required=False,
                 help='An optional password.')
+        parser.add_argument('--email', required=False,
+                help='An optional email address to send the file to.')
         return parser
 
     def take_action(self, parsed_args):
@@ -27,5 +29,6 @@ class ShareFiles(Command):
             parsed_args.share,
             parsed_args.bucket,
             parsed_args.name,
-            parsed_args.password
+            parsed_args.password,
+            parsed_args.email
         )

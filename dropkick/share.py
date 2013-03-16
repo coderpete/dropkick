@@ -1,7 +1,16 @@
 import os
+import urllib
+import webbrowser
 
 from cStringIO import StringIO
 
+
+__email_template__ = '''I've got something to share with you. Download it here:
+
+    %(link)s
+
+%(password)s
+'''
 
 def upload_content(connection, bucket, key, content):
     # create the object and set its content
@@ -19,7 +28,7 @@ def upload_content(connection, bucket, key, content):
 def create_zip(path, name, password):
     parent, directory = os.path.split(path)
     os.chdir(parent)
-    os.system('zip -r %(zip-name)s.zip %(password)s %(directory)s' % {
+    os.system('zip -r %(zip-name)s.zip %(password)s %(directory)s > /dev/null' % {
         'zip-name': name,
         'password': ('--password="%s"' % password) if password else '',
         'directory': directory
@@ -27,7 +36,7 @@ def create_zip(path, name, password):
     return open('%s.zip' % name, 'rb').read()
 
 
-def share(connection, path, bucket, name, password):
+def share(connection, path, bucket, name, password, email):
     # create the zip file
     zipped_data = create_zip(path, name, password)
 
@@ -40,3 +49,17 @@ def share(connection, path, bucket, name, password):
 
     # output to the console
     print 'Your file is now available at: %s' % public_url
+
+    # optionally open an email
+    if email:
+        mailto = 'mailto:%(email)s?body=%(body)s&subject=%(subject)s' % {
+            'email': email,
+            'subject': 'Something to share with you',
+            'body': __email_template__ % {
+                'link': public_url,
+                'password': (
+                    'Use the password %s to open the file.' % password
+                ) if password else ''
+            }
+        }
+        webbrowser.open_new(mailto)
