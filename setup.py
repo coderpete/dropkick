@@ -8,7 +8,6 @@ version = '0.1.0'
 # determine requirements
 #
 requirements = [
-    "stevedore >= 0.8",
     "cliff",
     "boto"
 ]
