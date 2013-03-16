@@ -64,7 +64,8 @@ setup(
         'dropkick.cli': [
             'config = dropkick.cli.config:Configure',
             'document = dropkick.cli.document:PublishDocument',
-            'presentation = dropkick.cli.presentation:PublishPresentation'
+            'presentation = dropkick.cli.presentation:PublishPresentation',
+            'share = dropkick.cli.share:ShareFiles'
         ],
     },
 )
