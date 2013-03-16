@@ -9,6 +9,8 @@ a variety of ways to [DreamObjects](http://dreamhost.com/cloud/dreamobjects).
 * Publishing nicely formatted Markdown documents using `dropkick document`.
 * Publishing beautiful HTML5 presentations implemented in Markdown using
   `dropkick presentation`.
+* Sharing a directory of files as an optionally password protected zip using
+  `dropkick share`. 
 
 To get started, run `dropkick configure`, and provide your S3 credentials for
 DreamObjects. These credentials will be saved for later use.
