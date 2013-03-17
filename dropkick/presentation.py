@@ -1,7 +1,11 @@
 import os
+import sys
 import webbrowser
 import mimetypes
 import pkgutil
+import threading
+import time
+
 
 # define required resources
 __reveal_resources__ = [
@@ -29,6 +33,7 @@ __reveal_resources__ = [
     'reveal/plugin/print-pdf/print-pdf.js', 'reveal/plugin/remotes/remotes.js',
     'reveal/plugin/search/search.js', 'reveal/plugin/zoom-js/zoom.js'
 ]
+
 
 # define templates
 __template__ = '''<!doctype html>
@@ -92,6 +97,17 @@ __container_template__ = '''<section>
 '''
 
 
+class ProgressBar(threading.Thread):
+    def finish(self):
+        self.finished = True
+
+    def run(self):
+        while not getattr(self, 'finished', False):
+            sys.stdout.write('.')
+            sys.stdout.flush()
+            time.sleep(1)
+
+
 def generate(markdown_file):
     markdown = markdown_file.read()
 
@@ -144,6 +160,10 @@ def upload_content(connection, bucket, key, content):
 
 
 def publish(connection, presentation, bucket, name):
+    # create a progress bar
+    progress_bar = ProgressBar()
+    progress_bar.start()
+
     # generate and upload the index file
     object_name = '%s/index.html' % name
     content = generate(open(presentation + os.sep + 'index.md', 'rb'))
@@ -163,7 +183,14 @@ def publish(connection, presentation, bucket, name):
         key_name = '%s/%s' % (name, resource)
         upload_content(connection, bucket, key_name, content)
 
+    # signal completion
+    progress_bar.finish()
+
     # open in the browser
     public_url = index_key.generate_url(0, query_auth=False, force_http=True)
     os.system('echo "%s" | pbcopy' % public_url)
     webbrowser.open_new(public_url)
+
+    # print out a message
+    print
+    print 'Your presentation is now available at:', public_url
