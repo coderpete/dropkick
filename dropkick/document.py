@@ -14,7 +14,7 @@ __template__ = '''<!DOCTYPE html>
 </html>
 '''
 
-def publish(connection, document, bucket, theme, title=None):
+def publish(connection, document, bucket, theme, prefix=None, title=None):
     bucket = connection.get_bucket(bucket)
 
     key_name = document.name
@@ -23,6 +23,9 @@ def publish(connection, document, bucket, theme, title=None):
         key_name = key_name.rsplit('.', 1)[0] + '.html'
     if '/' in key_name:
         key_name = key_name.rsplit('/', 1)[1]
+
+    if prefix:
+        key_name = '%s/%s' % (prefix, key_name)
 
     content = __template__ % {
         'title': title if title else key_name,
