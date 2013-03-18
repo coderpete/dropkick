@@ -1,8 +1,5 @@
 import os
-import urllib
 import webbrowser
-
-from cStringIO import StringIO
 
 
 __email_template__ = '''I've got something to share with you. Download it here:
@@ -11,6 +8,7 @@ __email_template__ = '''I've got something to share with you. Download it here:
 
 %(password)s
 '''
+
 
 def upload_content(connection, bucket, key, content):
     # create the object and set its content
@@ -25,10 +23,13 @@ def upload_content(connection, bucket, key, content):
     return key
 
 
+_zip_command = 'zip -r %(zip-name)s.zip %(password)s %(directory)s > /dev/null'
+
+
 def create_zip(path, name, password):
     parent, directory = os.path.split(path)
     os.chdir(parent)
-    os.system('zip -r %(zip-name)s.zip %(password)s %(directory)s > /dev/null' % {
+    os.system(_zip_command % {
         'zip-name': name,
         'password': ('--password="%s"' % password) if password else '',
         'directory': directory

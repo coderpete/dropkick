@@ -1,10 +1,10 @@
-import os
-import sys
-import webbrowser
 import mimetypes
+import os
 import pkgutil
+import sys
 import threading
 import time
+import webbrowser
 
 
 # define required resources
@@ -36,53 +36,7 @@ __reveal_resources__ = [
 
 
 # define templates
-__template__ = '''<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>%(title)s</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="reveal/css/reveal.min.css">
-    <link rel="stylesheet" href="reveal/css/theme/%(theme)s.css" id="theme">
-    <link rel="stylesheet" href="reveal/lib/css/zenburn.css">
-    <script>
-      document.write( '<link rel="stylesheet" href="reveal/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
-    <!--[if lt IE 9]>
-    <script src="reveal/lib/js/html5shiv.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        %(content)s
-      </div>
-    </div>
-    <script src="reveal/lib/js/head.min.js"></script>
-    <script src="reveal/js/reveal.min.js"></script>
-    <script>
-      Reveal.initialize({
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        theme: Reveal.getQueryHash().theme,
-        transition: Reveal.getQueryHash().transition || 'default',
-        dependencies: [
-          { src: 'reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'reveal/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'reveal/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'reveal/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-        ]
-      });
-    </script>
-  </body>
-</html>
-'''
+__template__ = pkgutil.get_data('dropbox', 'templates/presentation.html')
 
 __section_template__ = '''<section data-markdown>
 <script type="text/template">
@@ -114,7 +68,8 @@ def generate(markdown_file):
     # parse headers
     headerlines, markdown = markdown.split('==', 1)
     headerlines = headerlines.split('\n')
-    headers = dict([[value.strip() for value in line.split(':')] for line in headerlines if line])
+    headers = dict([[value.strip() for value in line.split(':')]
+                    for line in headerlines if line])
 
     # split into sections
     sections = markdown.split('\n\n==\n\n')
