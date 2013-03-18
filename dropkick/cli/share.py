@@ -11,16 +11,21 @@ class ShareFiles(Command):
 
     def get_parser(self, prog_name):
         parser = super(ShareFiles, self).get_parser(prog_name)
-        parser.add_argument('share',
-                help='The path to your directory to share.')
-        parser.add_argument('--name', required=True,
-                help='The name to give the zipped object.')
-        parser.add_argument('--bucket', required=True,
-                help='The bucket to publish to.')
-        parser.add_argument('--password', required=False,
-                help='An optional password.')
-        parser.add_argument('--email', required=False,
-                help='An optional email address to send the file to.')
+        parser.add_argument(
+            'share',
+            help='The path to your directory to share.')
+        parser.add_argument(
+            '--name', required=True,
+            help='The name to give the zipped object.')
+        parser.add_argument(
+            '--bucket', required=True,
+            help='The bucket to publish to.')
+        parser.add_argument(
+            '--password', required=False,
+            help='An optional password.')
+        parser.add_argument(
+            '--email', required=False,
+            help='An optional email address to send the file to.')
         return parser
 
     def take_action(self, parsed_args):

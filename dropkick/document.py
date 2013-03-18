@@ -14,6 +14,7 @@ __template__ = '''<!DOCTYPE html>
 </html>
 '''
 
+
 def publish(connection, document, bucket, theme, prefix=None, title=None):
     bucket = connection.get_bucket(bucket)
 

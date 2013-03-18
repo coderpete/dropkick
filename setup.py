@@ -1,6 +1,4 @@
-import sys
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 
 version = '0.1.0'
 
@@ -19,7 +17,6 @@ except:
         import simplejson  # noqa
     except:
         requirements.append("simplejson >= 2.1.1")
-
 
 
 #
@@ -56,7 +53,8 @@ setup(
     scripts=[],
     zip_safe=False,
     install_requires=requirements,
-    package_data={'dropkick': ['resources/reveal/*']},
+    package_data={'dropkick': ['resources/reveal/*',
+                               'templates/*.html']},
     entry_points={
         'console_scripts': [
             'dropkick = dropkick.cli.main:main'
