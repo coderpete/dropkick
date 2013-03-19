@@ -36,7 +36,7 @@ __reveal_resources__ = [
 
 
 # define templates
-__template__ = pkgutil.get_data('dropbox', 'templates/presentation.html')
+__template__ = pkgutil.get_data('dropkick', 'templates/presentation.html')
 
 __section_template__ = '''<section data-markdown>
 <script type="text/template">
