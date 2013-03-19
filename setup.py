@@ -46,7 +46,7 @@ setup(
     keywords='publish share cloud store archive',
     author='Jonathan LaCour',
     author_email='jonathan@cleverdevil.org',
-    url='http://github.com/cleverdevil/dropkicker',
+    url='http://github.com/cleverdevil/dropkick',
     license='BSD',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     include_package_data=True,
