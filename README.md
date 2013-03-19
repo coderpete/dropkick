@@ -19,3 +19,14 @@ installation.
 
 Once you have dropkick installed, run `dropkick config`, and provide your S3
 credentials for DreamObjects. These credentials will be saved for later use.
+
+--
+
+**Credits**
+
+* Dropkick makes use of the excellent [Strapdown](http://strapdownjs.com)
+  JavaScript library for rendering beautiful Markdown documents.
+* Dropkick uses the awesome [Reveal.js](http://lab.hakim.se/reveal-js/)
+  JavaScript library for creating lovely HTML5 presentations.
+* Communication with DreamObjects is enabled by the awesome 
+  [boto](https://github.com/boto/boto) library.
