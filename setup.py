@@ -53,8 +53,6 @@ setup(
     scripts=[],
     zip_safe=False,
     install_requires=requirements,
-    package_data={'dropkick': ['resources/reveal/*',
-                               'templates/*.html']},
     entry_points={
         'console_scripts': [
             'dropkick = dropkick.cli.main:main'
