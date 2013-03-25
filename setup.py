@@ -7,7 +7,10 @@ version = '0.1.0'
 #
 requirements = [
     "cliff",
-    "boto"
+    "boto",
+    "mock",
+    "docutils",
+    "pygments"
 ]
 
 try:

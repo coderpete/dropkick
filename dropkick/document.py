@@ -1,6 +1,8 @@
 import os
 import webbrowser
 
+from docutils.core import publish_parts
+
 
 __template__ = '''<!DOCTYPE html>
 <html>
@@ -10,9 +12,13 @@ __template__ = '''<!DOCTYPE html>
 %(content)s
 </xmp>
 
+%(rawcontent)s
+
 <script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
 </html>
 '''
+
+__raw_content_template__ = '<div class="container" id="content">%s</div>'
 
 
 def publish(connection, document, bucket, theme, prefix=None, title=None):
@@ -28,9 +34,17 @@ def publish(connection, document, bucket, theme, prefix=None, title=None):
     if prefix:
         key_name = '%s/%s' % (prefix, key_name)
 
+    content = document.read()
+    rawcontent = ''
+    if document.name.endswith('.rst'):
+        html = publish_parts(content, writer_name='html')['body']
+        rawcontent = __raw_content_template__ % html
+        content = ''
+
     content = __template__ % {
         'title': title if title else key_name,
-        'content': document.read(),
+        'content': content,
+        'rawcontent': rawcontent,
         'theme': theme
     }
 
